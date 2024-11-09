@@ -1,5 +1,7 @@
 package telran.employees;
 
+import java.util.Arrays;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -40,14 +42,8 @@ public class CompanyProtocol implements Protocol {
 
     private Response getManagersWithMostFactorServer() {
         Manager[] managers = company.getManagersWithMostFactor();
-        JSONArray jsonArray = new JSONArray();
-
-        for (Manager manager : managers) {
-            JSONObject jsonObj = new JSONObject();
-            manager.fillJSON(jsonObj);
-            jsonObj.put("className", manager.getClass().getName());
-            jsonArray.put(jsonObj);
-        }
+        String[] strings = Arrays.stream(managers).map(Manager::toString).toArray(String[]::new);
+        JSONArray jsonArray = new JSONArray(strings);
 
         return new Response(ResponseCode.OK, jsonArray.toString());
     }

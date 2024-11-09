@@ -1,6 +1,7 @@
 package telran.employees;
 
 import java.util.Iterator;
+import java.util.stream.IntStream;
 
 import org.json.JSONArray;
 
@@ -49,14 +50,9 @@ public class CompanyTcpProxy implements Company{
         String jsonString = tcpClient.sendAndReceive("getManagersWithMostFactor", "");
         JSONArray jsonArray = new JSONArray(jsonString);
 
-        Manager[] managers = new Manager[jsonArray.length()];
-        
-        for (int i = 0; i < jsonArray.length(); i++) {
-            Employee manager = Employee.getEmployeeFromJSON(jsonArray.getJSONObject(i).toString());
-            managers[i] = (Manager) manager;
-        }
-
-        return managers;
+        return IntStream.range(0, jsonArray.length())
+            .mapToObj(i -> (Manager)Employee.getEmployeeFromJSON(jsonArray.getJSONObject(i).toString()))
+            .toArray(Manager[]::new);
     }
 
     @Override
