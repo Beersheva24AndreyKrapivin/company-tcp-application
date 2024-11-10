@@ -50,8 +50,8 @@ public class CompanyTcpProxy implements Company{
         String jsonString = tcpClient.sendAndReceive("getManagersWithMostFactor", "");
         JSONArray jsonArray = new JSONArray(jsonString);
 
-        return IntStream.range(0, jsonArray.length())
-            .mapToObj(i -> (Manager)Employee.getEmployeeFromJSON(jsonArray.getJSONObject(i).toString()))
+        return jsonArray.toList().stream()
+            .map(obj -> Employee.getEmployeeFromJSON(obj.toString()))
             .toArray(Manager[]::new);
     }
 
