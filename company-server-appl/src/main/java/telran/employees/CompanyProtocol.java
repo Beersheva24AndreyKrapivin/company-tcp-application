@@ -24,8 +24,12 @@ public class CompanyProtocol implements Protocol {
             Method method = CompanyProtocol.class.getDeclaredMethod(type, String.class);
             method.setAccessible(true);
             return (Response) method.invoke(this, data);
+        } catch (NoSuchMethodException e) {
+            response = new Response(ResponseCode.WRONG_DATA, type + " Not found");
         } catch (Exception e) {
-            response = new Response(ResponseCode.WRONG_DATA, e.getMessage());
+            Throwable causeExc = e.getCause();
+            String message = causeExc == null ? e.getMessage() : causeExc.getMessage();
+            response = new Response(ResponseCode.WRONG_DATA, message);
         }
         return response;
     }
