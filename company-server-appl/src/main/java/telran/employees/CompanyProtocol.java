@@ -13,7 +13,11 @@ import telran.net.ResponseCode;
 
 public class CompanyProtocol implements Protocol {
 
-    private static Company company = new CompanyImpl();
+    Company company;
+
+    public CompanyProtocol(Company company) {
+        this.company = company;
+    }
 
     @Override
     public Response getResponse(Request request) {

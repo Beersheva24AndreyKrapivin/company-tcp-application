@@ -18,8 +18,7 @@ public class CompanyNetProxy implements Company{
 
     @Override
     public Iterator<Employee> iterator() {
-        CompanyImpl impl = new CompanyImpl();
-        return impl.iterator();
+        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
     }
 
     @Override
