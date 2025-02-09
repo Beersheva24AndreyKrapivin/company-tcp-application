@@ -9,7 +9,7 @@ import java.util.Arrays;
 import telran.net.*;
 
 public class Main {
-    private static final String HOST = "localhost";
+    private static final String HOST = "34.227.194.247";
     private static final int PORT = 4000;
 
     public static void main(String[] args) {

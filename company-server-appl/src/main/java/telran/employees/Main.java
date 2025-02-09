@@ -11,9 +11,10 @@ public class Main {
         Company company = new CompanyImpl();
         if (company instanceof Persistable persistable) {
             persistable.restoreFromFile(FILE_NAME);
-            CompanySaveData companySaveData = new CompanySaveData(persistable, FILE_NAME);
-            Thread thread = new Thread(companySaveData);
+            CompanySaveData thread = new CompanySaveData(persistable, FILE_NAME, 60000);
+            //Thread thread = new Thread(companySaveData);
             thread.start();
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> persistable.saveToFile(FILE_NAME)));
         }
         TcpServer tcpServer = new TcpServer(new CompanyProtocol(company), PORT);
         tcpServer.run();
